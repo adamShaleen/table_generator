@@ -4,30 +4,34 @@ import './Table.css';
 
 const Table = (props) => {
 
+    const [rowsAndCells, setRowsAndCells] = useState(props.defaults.rows);
     const [start, setStart] = useState(props.defaults.start);
     const [increment, setIncrement] = useState(props.defaults.increment);
     const [max, setMax] = useState(props.defaults.max);
     const [width, setWidth] = useState(props.defaults.width);
-    const [showConfiguration, setShowConfiguration] = useState(false);
+    // const [showConfiguration, setShowConfiguration] = useState(false);
 
     const handleSetStart = (start) => {
-        setStart(start);
+        setStart(parseInt(start));
     }
 
     const handleSetIncrement = (increment) => {
-        setIncrement(increment);
+        setIncrement(parseInt(increment));
     }
 
     const handleSetMax = (max) => {
-        setMax(max);
+        setMax(parseInt(max));
     }
 
     const handleSetWidth = (width) => {
         setWidth(width);
     }
 
-    const handleShowConfiguration = () => {
-        setShowConfiguration(showConfiguration ? false : true);
+    const handleClick = () => {
+        //console.log(`rowsAndCells before ${rowsAndCells}`);
+        setRowsAndCells(Utilities.createRowsAndDataCells(start, increment, max));
+        //console.log(`rowsAndCells after ${rowsAndCells}`);
+        //console.log(Utilities.createRowsAndDataCells(start, increment, max));
     }
 
     return (
@@ -35,12 +39,12 @@ const Table = (props) => {
             <div className="table_container" style={{border: `1px solid ${props.color}`, width: `${width}%`}}>
                 <table>
                     <tbody>
-                        {Utilities.createRowsAndDataCells(start, increment, max).map((row, index) => {
+                        {rowsAndCells.map((row, index) => {
                             return (
-                                <tr>
+                                <tr key={`row_${row}_index${index}`}>
                                     {row.map(cell => {
                                         return (
-                                            <td>{cell}</td>
+                                            <td key={cell}>{cell}</td>
                                         )
                                     })}
                                 </tr>
@@ -49,18 +53,18 @@ const Table = (props) => {
                     </tbody>
                 </table>
                 <div className="table_buttons_container">
-                    <button onClick={handleShowConfiguration}>Configuration</button>
+                    <button id={`${props.color}_config_button`}>Configuration</button>
+                    <p>{width}%</p>
                 </div>
             </div>
-            {showConfiguration ?
                 <div className="config_container">
                     <div className="config_inputs">
                         <p>Table: <span style={{color: props.color}}>{props.color}</span></p>
-                        <input type="number" placeholder={`Start: ${start}`} onChange={event => handleSetStart(event.target.value)}/>
+                        <input type="number" placeholder={`Start: ${start}`} onChange={event => handleSetStart(event.target.value)} min="1"/>
                         <br />
-                        <input type="number" placeholder={`Increment: ${increment}`} onChange={event => handleSetIncrement(event.target.value)}/>
+                        <input type="number" placeholder={`Increment: ${increment}`} onChange={event => handleSetIncrement(event.target.value)} min="1"/>
                         <br />
-                        <input type="number" placeholder={`Max: ${max}`} onChange={event => handleSetMax(event.target.value)}/>
+                        <input type="number" placeholder={`Max: ${max}`} onChange={event => handleSetMax(event.target.value)} max="100"/>
                         <br />
                         <input type="number" placeholder={`Width: ${width}`} onChange={event => handleSetWidth(event.target.value)} min="20"/>
                         <br />
@@ -69,10 +73,9 @@ const Table = (props) => {
                             <option>LTR-UP</option>
                         </select>
                         <br />
-                        <button onClick={handleShowConfiguration}>OK</button>
+                        <button id={`${props.color}_create_button`} onClick={handleClick}>OK</button>
                     </div>
                 </div>
-            : ''}
 
         </div>
     )
