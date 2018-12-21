@@ -1,42 +1,51 @@
 import React, { useState } from 'react';
+import Utilities from '../../utilities/Utilities';
 import './Table.css';
 
 const Table = (props) => {
 
-    const [n, setN] = useState(props.defaults.n);
-    const [x, setX] = useState(props.defaults.x);
-    const [m, setM] = useState(props.defaults.m);
-    const [w, setW] = useState(props.defaults.w);
+    const [start, setStart] = useState(props.defaults.start);
+    const [increment, setIncrement] = useState(props.defaults.increment);
+    const [max, setMax] = useState(props.defaults.max);
+    const [width, setWidth] = useState(props.defaults.width);
     const [showConfiguration, setShowConfiguration] = useState(false);
 
-    const handleSetW = (width) => {
-        setW(width);
+    const handleSetStart = (start) => {
+        setStart(start);
+    }
+
+    const handleSetIncrement = (increment) => {
+        setIncrement(increment);
+    }
+
+    const handleSetMax = (max) => {
+        setMax(max);
+    }
+
+    const handleSetWidth = (width) => {
+        setWidth(width);
     }
 
     const handleShowConfiguration = () => {
-        setShowConfiguration(true);
+        setShowConfiguration(showConfiguration ? false : true);
     }
 
     return (
         <div className="table_and_config_container">
-            <div className="table_container" style={{border: `1px solid ${props.color}`, width: `${w}%`}}>
+            <div className="table_container" style={{border: `1px solid ${props.color}`, width: `${width}%`}}>
                 <table>
                     <tbody>
-                        <tr>
-                            <td>test</td>
-                            <td>test</td>
-                            <td>test</td>
-                        </tr>
-                        <tr>
-                            <td>test</td>
-                            <td>test</td>
-                            <td>test</td>
-                        </tr>
-                        <tr>
-                            <td>test</td>
-                            <td>test</td>
-                            <td>test</td>
-                        </tr>
+                        {Utilities.createRowsAndDataCells(start, increment, max).map((row, index) => {
+                            return (
+                                <tr>
+                                    {row.map(cell => {
+                                        return (
+                                            <td>{cell}</td>
+                                        )
+                                    })}
+                                </tr>
+                            )
+                        })}
                     </tbody>
                 </table>
                 <div className="table_buttons_container">
@@ -47,21 +56,20 @@ const Table = (props) => {
                 <div className="config_container">
                     <div className="config_inputs">
                         <p>Table: <span style={{color: props.color}}>{props.color}</span></p>
-                        <input type="number" placeholder="N" />
+                        <input type="number" placeholder={`Start: ${start}`} onChange={event => handleSetStart(event.target.value)}/>
                         <br />
-                        <input type="number" placeholder="X" />
+                        <input type="number" placeholder={`Increment: ${increment}`} onChange={event => handleSetIncrement(event.target.value)}/>
                         <br />
-                        <input type="number" placeholder="M" />
+                        <input type="number" placeholder={`Max: ${max}`} onChange={event => handleSetMax(event.target.value)}/>
                         <br />
-                        <input type="number" placeholder="W" onChange={event => handleSetW(event.target.value)}/>
+                        <input type="number" placeholder={`Width: ${width}`} onChange={event => handleSetWidth(event.target.value)} min="20"/>
                         <br />
                         <select>
                             <option default>D</option>
                             <option>LTR-UP</option>
                         </select>
                         <br />
-                        <button>OK</button>
-                        <button>Cancel</button>
+                        <button onClick={handleShowConfiguration}>OK</button>
                     </div>
                 </div>
             : ''}

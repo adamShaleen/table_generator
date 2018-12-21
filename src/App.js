@@ -5,7 +5,7 @@ import Table from './components/table/Table';
 
 const App = () => {
 
-    const redTableDefault = {n: 8, x: 1, m: 29, w: 44}
+    const redTableDefault = {start: 8, increment: 1, max: 29, width: 20}
 
     return (
       <div className="App">
