@@ -9,7 +9,7 @@ const Table = (props) => {
     const [increment, setIncrement] = useState(props.defaults.increment);
     const [max, setMax] = useState(props.defaults.max);
     const [width, setWidth] = useState(props.defaults.width);
-    // const [showConfiguration, setShowConfiguration] = useState(false);
+    const [showConfiguration, setShowConfiguration] = useState(false);
 
     const handleSetStart = (start) => {
         setStart(parseInt(start));
@@ -27,11 +27,13 @@ const Table = (props) => {
         setWidth(width);
     }
 
-    const handleClick = () => {
-        //console.log(`rowsAndCells before ${rowsAndCells}`);
-        setRowsAndCells(Utilities.createRowsAndDataCells(start, increment, max));
-        //console.log(`rowsAndCells after ${rowsAndCells}`);
-        //console.log(Utilities.createRowsAndDataCells(start, increment, max));
+    const handleClick = (buttonId) => {
+        if (buttonId === `${props.color}_create_button`) {
+            setRowsAndCells(Utilities.createRowsAndDataCells(start, increment, max));
+            setShowConfiguration(false);
+        } else {
+            setShowConfiguration(true);
+        }
     }
 
     return (
@@ -53,10 +55,11 @@ const Table = (props) => {
                     </tbody>
                 </table>
                 <div className="table_buttons_container">
-                    <button id={`${props.color}_config_button`}>Configuration</button>
+                    <button id={`${props.color}_config_button`} onClick={event => handleClick(event.target.id)}>Configuration</button>
                     <p>{width}%</p>
                 </div>
             </div>
+            {showConfiguration ?
                 <div className="config_container">
                     <div className="config_inputs">
                         <p>Table: <span style={{color: props.color}}>{props.color}</span></p>
@@ -69,14 +72,14 @@ const Table = (props) => {
                         <input type="number" placeholder={`Width: ${width}`} onChange={event => handleSetWidth(event.target.value)} min="20"/>
                         <br />
                         <select>
-                            <option default>D</option>
+                            <option default>Direction</option>
                             <option>LTR-UP</option>
                         </select>
                         <br />
-                        <button id={`${props.color}_create_button`} onClick={handleClick}>OK</button>
+                        <button id={`${props.color}_create_button`} onClick={event => handleClick(event.target.id)}>OK</button>
                     </div>
                 </div>
-
+                : '' }
         </div>
     )
 }

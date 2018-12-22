@@ -1,9 +1,8 @@
 const Utilities = {
     createRowsAndDataCells: (start, increment, maxCells) => {
-        console.log(`args for create method: ${start} ${increment} ${maxCells}`);
         let range = createRange(start, increment, maxCells);
 
-        const rows = [];
+        let rows = [];
         let currentRow = [];
         let cellsPerRow = 4;
 
@@ -27,7 +26,6 @@ const Utilities = {
 const createRange = (start, increment, max) => {
     let range = [];
     for (let i = start; i <= max; i+= increment) {
-        console.log(`Create Range Loop#${i}`);
         range.push(i);
     }
     return range;
