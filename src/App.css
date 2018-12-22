@@ -3,3 +3,10 @@ body, h4 {
     padding: 0;
     font-family: Arial;
 }
+
+@media(min-width: 1024px) {
+    #table_container {
+        display: flex;
+        justify-content: space-around;
+    }
+}

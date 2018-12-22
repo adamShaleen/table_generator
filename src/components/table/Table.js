@@ -37,8 +37,8 @@ const Table = (props) => {
     }
 
     return (
-        <div className="table_and_config_container">
-            <div className="table_container" style={{border: `1px solid ${props.color}`, width: `${width}%`}}>
+        <div id={`${props.color}_table_container`} className="table_config_container" style={{width: `${width}%`}}>
+            <div className="table_container" style={{border: `1px solid ${props.color}`}}>
                 <table>
                     <tbody>
                         {rowsAndCells.map((row, index) => {
@@ -69,7 +69,7 @@ const Table = (props) => {
                         <br />
                         <input type="number" placeholder={`Max: ${max}`} onChange={event => handleSetMax(event.target.value)} max="100"/>
                         <br />
-                        <input type="number" placeholder={`Width: ${width}`} onChange={event => handleSetWidth(event.target.value)} min="20"/>
+                        <input type="number" placeholder={`Width: ${width}`} onChange={event => handleSetWidth(event.target.value)} max="100"/>
                         <br />
                         <select>
                             <option default>Direction</option>
@@ -79,7 +79,7 @@ const Table = (props) => {
                         <button id={`${props.color}_create_button`} onClick={event => handleClick(event.target.id)}>OK</button>
                     </div>
                 </div>
-                : '' }
+            : '' }
         </div>
     )
 }

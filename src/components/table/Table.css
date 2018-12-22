@@ -32,3 +32,13 @@ tr, td {
 .config_inputs {
     text-align: center;
 }
+
+#blue_table_container {
+    display: none;
+}
+
+@media(min-width: 375px) {
+    #blue_table_container {
+        display: block;
+    }
+}
