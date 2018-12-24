@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Snapshot of Header component renders correctly 1`] = `
+<div
+  id="header"
+>
+  <h4>
+    Table Generator
+  </h4>
+</div>
+`;

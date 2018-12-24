@@ -1,13 +1,18 @@
-const Utilities = {
-    createRowsAndDataCells: (start, increment, maxCells) => {
+const createRowsAndDataCells = (start, increment, maxCells) => {
         let range = createRange(start, increment, maxCells);
 
         let rows = [];
         let currentRow = [];
         let cellsPerRow = 4;
 
-        for (let i = 0; i < range.length; i++) {
-            if (i === range.length -1) {
+        for (let i = 0; i <= range.length; i++) {
+            if (i === range.length) {
+                if (currentRow.length < 5 && currentRow.length > 0) {
+                    const emptyCells = 5 - currentRow.length;
+                    for (let x = 1; x <= emptyCells; x++) {
+                        currentRow.push('');
+                    }
+                }
     	        rows.push(currentRow);
             } else if (cellsPerRow > 0) {
     	        currentRow.push(range[i]);
@@ -21,7 +26,7 @@ const Utilities = {
         }
         return rows;
     }
-}
+
 
 const createRange = (start, increment, max) => {
     let range = [];
@@ -30,5 +35,7 @@ const createRange = (start, increment, max) => {
     }
     return range;
 }
+
+const Utilities = {createRowsAndDataCells, createRange}
 
 export default Utilities;

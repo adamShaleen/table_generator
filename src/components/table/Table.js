@@ -31,6 +31,8 @@ const Table = (props) => {
         if (buttonId === `${props.color}_create_button`) {
             setRowsAndCells(Utilities.createRowsAndDataCells(start, increment, max));
             setShowConfiguration(false);
+        } else if (buttonId === `${props.color}_cancel_button`){
+            setShowConfiguration(false);
         } else {
             setShowConfiguration(true);
         }
@@ -46,7 +48,9 @@ const Table = (props) => {
                                 <tr key={`row_${row}_index${index}`}>
                                     {row.map(cell => {
                                         return (
-                                            <td key={cell}>{cell}</td>
+                                            <td key={`${cell}_${row}_${index}_${Math.random() * 1000 + 1}`}
+                                                style={{background: cell === '' ? 'lightgrey' : ''}}>{cell}
+                                            </td>
                                         )
                                     })}
                                 </tr>
@@ -71,12 +75,8 @@ const Table = (props) => {
                         <br />
                         <input type="number" placeholder={`Width: ${width}`} onChange={event => handleSetWidth(event.target.value)} max="100"/>
                         <br />
-                        <select>
-                            <option default>Direction</option>
-                            <option>LTR-UP</option>
-                        </select>
-                        <br />
-                        <button id={`${props.color}_create_button`} onClick={event => handleClick(event.target.id)}>OK</button>
+                        <button id={`${props.color}_cancel_button`} onClick={event => handleClick(event.target.id)}>Cancel</button>
+                        <button id={`${props.color}_create_button`} onClick={event => handleClick(event.target.id)}>Update</button>
                     </div>
                 </div>
             : '' }
